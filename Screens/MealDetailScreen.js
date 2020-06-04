@@ -1,11 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import {View,Text,StyleSheet} from 'react-native';
+import {MEALS} from "../data/dummy-data";
 
-function MealDetailScreen(props) {
+function MealDetailScreen({route,navigation}) {
+    const {mealId} = route.params;
+    const selectedMeal =  MEALS.find(meal => meal.id === mealId)
 
     return(
         <View style={styles.screen}>
             <Text>The Meal Detail Screen!</Text>
+            <Text>{selectedMeal.ingredients}</Text>
         </View>
 
     );

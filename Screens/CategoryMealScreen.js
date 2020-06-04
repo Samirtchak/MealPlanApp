@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {View,Text,StyleSheet,FlatList} from 'react-native';
+import {View,Text,StyleSheet,FlatList,Button, TouchableOpacity} from 'react-native';
 import {CATEGORIES, MEALS} from "../data/dummy-data";
 import MealItem from "../components/MealItem";
-
+import {Icon} from "react-native-elements";
 
 
 function CategoryMealScreen( { route, navigation }) {
@@ -14,6 +14,19 @@ function CategoryMealScreen( { route, navigation }) {
 
          const displayMeal = MEALS.filter(meal => meal.categoryIds.indexOf(categoryId) >=0);
 
+         const  buttonFav = () => {
+             return(
+                 <TouchableOpacity>
+                 <Icon
+                     name="ios-star"
+                     type='ionicon'
+                 />
+                 </TouchableOpacity>
+
+
+             )
+         }
+
          const renderMealItem = itemData => {
              return(
                  <MealItem
@@ -22,7 +35,12 @@ function CategoryMealScreen( { route, navigation }) {
                      image={itemData.item.imageUrl}
                      complexity={itemData.item.complexity}
                      affordability={itemData.item.affordability}
-                     onSelectMeal={() => {}}
+                     onSelectMeal={() => {navigation.navigate('Meal Detail',
+                         {
+                             mealId: itemData.item.id,
+                             mealName:itemData.item.title,
+                             button:buttonFav
+                         })}}
 
                  />
              )
@@ -56,6 +74,6 @@ function CategoryMealScreen( { route, navigation }) {
             flex:1,
             justifyContent:'center',
             alignItems:'center'
-        }
+        },
     })
  export default CategoryMealScreen;
