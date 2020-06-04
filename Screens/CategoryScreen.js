@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View,Text,StyleSheet,Button,FlatList, TouchableOpacity} from 'react-native';
 import {CATEGORIES} from "../data/dummy-data";
 import {Value} from "react-native-reanimated";
+import CategoryGridTitle from "../components/CategoryGridTitle";
 
 
 const styles= StyleSheet.create({
@@ -10,12 +11,8 @@ const styles= StyleSheet.create({
         justifyContent:'center',
         color:'black',
         alignItems:'center'
-    },
-    gridItem: {
-        flex:1,
-        margin:15,
-        height:150
     }
+
 })
 
 function CategoryScreen(props) {
@@ -23,20 +20,13 @@ function CategoryScreen(props) {
     const  renderGridItem = (itemData) => {
 
         return  (
-            <TouchableOpacity style={styles.gridItem} onPress={() => {
-                props.navigation.navigate('Meals Categories',
-                    {
-                        categoryId: itemData.item.id,
-                        name: itemData.item.title
-                    })
-
-
-
-
-            }}>
-
-                <View><Text>{itemData.item.title}</Text></View>
-            </TouchableOpacity>
+            <CategoryGridTitle title={itemData.item.title} onSelect={() =>props.navigation.navigate('Meals Categories',
+                {
+                    categoryId: itemData.item.id,
+                    name: itemData.item.title
+                })}
+                color={itemData.item.color}
+            />
         );
 
     }
