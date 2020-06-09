@@ -10,6 +10,8 @@ import FavoriteScreen from "../Screens/FavoriteScreen";
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FiltersScreen from "../Screens/FiltersScreen";
+import {NavigationState as route} from "react-navigation";
+
 
 
 
@@ -19,7 +21,9 @@ const Tab = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
 
+
 function MyDrawer() {
+
     return (
         <Drawer.Navigator>
             <Drawer.Screen name="Home" component={TabNavig} />
@@ -75,16 +79,26 @@ function FavNavigator({navigation}) {
 
 const Filter = createStackNavigator()
 
-function FilterNavigator({navigation}) {
+function FilterNavigator({navigation,route}) {
+
+
     return (
     <Filter.Navigator>
-        <Filter.Screen name="Filter Meal" component={FiltersScreen} options={{headerLeft: () => (
+        <Filter.Screen name="Filter Meal" component={FiltersScreen}  options={{headerLeft: () => (
             <View style={{paddingLeft:10}}>
                 <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
                     <Ionicons name="ios-menu" size={30}  />
                 </TouchableOpacity>
             </View>
-            )}}/>
+            ),headerRight: () => (
+                <View style={{paddingRight:10}}>
+                    <TouchableOpacity onPress={ ({route}) => {}}>
+                        <Ionicons name="ios-save" size={30}  />
+                    </TouchableOpacity>
+                </View>
+            )}
+
+        }/>
 
     </Filter.Navigator>
     )
