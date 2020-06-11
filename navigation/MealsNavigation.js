@@ -50,7 +50,7 @@ function MealsNavigation({ navigation, route }) {
 
                 <Stack.Screen name="Meals Categories" component={CategoryMealScreen} options={({ route }) => ({ title: route.params.name  })} />
                 <Stack.Screen name="Meal Detail" component={MealDetailScreen}
-                              options={  ({ route }) => ({ headerTitle: route.params.mealName, headerRight:route.params.button}) }
+                         //     options={  ({ route }) => ({ headerTitle: route.params.mealName,/* headerRight:route.params.button*/}) }
                 />
             </Stack.Navigator>
 

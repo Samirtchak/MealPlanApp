@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {View,Text,StyleSheet,FlatList,Button, TouchableOpacity} from 'react-native';
-import {CATEGORIES, MEALS} from "../data/dummy-data";
+import {useSelector} from "react-redux";
+import {CATEGORIES} from "../data/dummy-data";
 import MealItem from "../components/MealItem";
 import {Icon} from "react-native-elements";
 
@@ -12,14 +13,16 @@ function CategoryMealScreen({route,navigation}) {
 
     const { categoryId } = route.params;
 
+    const  availableMeals = useSelector(state => state.meals.filteredMeals)
 
-         const selectedCategory = CATEGORIES.find(cat => cat.id === categoryId );
+    const selectedCategory = CATEGORIES.find(cat => cat.id === categoryId );
 
-         const displayMeal = MEALS.filter(meal => meal.categoryIds.indexOf(categoryId) >=0);
+    const displayMeal = availableMeals.filter(meal => meal.categoryIds.indexOf(categoryId) >=0);
 
-    const  buttonFav = () => {
+  /*  const  buttonFav = () => {
+        const {toggleFav} = route.params
         return(
-            <TouchableOpacity>
+            <TouchableOpacity onPress={toggleFav}>
                 <Icon
                     name="ios-star"
                     type='ionicon'
@@ -28,7 +31,7 @@ function CategoryMealScreen({route,navigation}) {
 
 
         )
-    }
+    } */
 
     const renderMealItem =(itemData)  => {
         return(
@@ -42,7 +45,7 @@ function CategoryMealScreen({route,navigation}) {
                     {
                         mealId: itemData.item.id,
                         mealName:itemData.item.title,
-                        button:buttonFav
+                        //button:buttonFav
                     })}}
 
             />

@@ -1,10 +1,55 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
-import {MEALS} from "../data/dummy-data";
+import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {useSelector,useDispatch} from "react-redux";
+import {toggleFavorite} from "../store/actions/actionmeals";
+import {useCallback, useEffect, useLayoutEffect} from "react";
+import {Icon} from "react-native-elements";
+
+
+
+
+
 
 function MealDetailScreen({route,navigation}) {
     const {mealId} = route.params;
-    const selectedMeal =  MEALS.find(meal => meal.id === mealId)
+    const availableMeals = useSelector(state => state.meals.meals)
+
+    const dispatch = useDispatch()
+    const selectedMeal =  availableMeals.find(meal => meal.id === mealId)
+
+    const toggleFavoriteHandler =  () => {
+        dispatch(toggleFavorite(selectedMeal.id))
+    }
+
+
+
+
+  //  const {toggleFav} = route.params
+
+
+    const  ButtonFav = (props) => {
+        return(
+            <TouchableOpacity onPress={props.toggleFav}>
+                <Icon
+                    name="ios-star"
+                    type='ionicon'
+                />
+            </TouchableOpacity>
+
+        )
+    }
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: selectedMeal.name,
+            headerRight: () => (
+                <ButtonFav toggleFav={toggleFavoriteHandler}/>
+            ),
+        })
+    })
+
+
+
 
     const ListItem = (props) => {
         return(
@@ -31,12 +76,12 @@ function MealDetailScreen({route,navigation}) {
 
     return(
         <ScrollView >
-            <ImageMeal/>
+            <ImageMeal />
 
-            <Text style={styles.title}>INGREDIENT</Text>
-                {selectedMeal.ingredients.map(ingredient => <ListItem detail={ingredient}/>)}
+            <Text  style={styles.title}>INGREDIENT</Text>
+                {selectedMeal.ingredients.map(ingredient => <ListItem key={ingredient} detail={ingredient}/>)}
             <Text style={styles.title}>STEPS</Text>
-                {selectedMeal.steps.map(step => <ListItem detail={step}/>)}
+                {selectedMeal.steps.map(step => <ListItem key={step} detail={step}/>)}
         </ScrollView>
 
     );
